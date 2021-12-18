@@ -1,2 +1,2 @@
 # yirs-lab
-Laboratory work on the educational and research work of students
+relinquere spem, quisque qui intrat hic
