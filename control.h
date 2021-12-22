@@ -21,10 +21,10 @@ struct aperiodic
   }
 };
 
-void aperiodic_solver(aperiodic *W, double *u)
+void aperiodic_solver(aperiodic *W, double u)
 {
 
-    W->y0 = W->y0 + (W->dt) * (W->one_div_T) * ((W->k) * (*u) - (W->y0));
+    W->y0 = W->y0 + (W->dt) * (W->one_div_T) * ((W->k) * (u) - (W->y0));
   
 }
 //-------------------------------------------------------------------
@@ -46,9 +46,9 @@ struct integral
     }
 };
 
-void integral_solver(integral* W, double* u)
+void integral_solver(integral *W, double u)
 {
-    W->y0 = W->y0 + W->dt * (*u);
+    W->y0 = W->y0 + W->dt * u;
 
 }
 //-------------------------------------------------------------------
