@@ -2,9 +2,9 @@
 #define CONTROL_H
 
 //---------------aperiodic--------------------------------
-struct aperiodic
+class aperiodic
 {
-
+public:
   double one_div_T = 0.0;
   double k = 0.0;
   double dt = 0.0;
@@ -19,21 +19,23 @@ struct aperiodic
     this->y0 = y0;
 
   }
+
+  void aperiodic_solver(double u)
+  {
+
+      y0 = y0 + (dt) * (one_div_T) * ((k) * (u)-(y0));
+
+  }
 };
 
-void aperiodic_solver(aperiodic *W, double u)
-{
 
-    W->y0 = W->y0 + (W->dt) * (W->one_div_T) * ((W->k) * (u) - (W->y0));
-  
-}
 //-------------------------------------------------------------------
 
 
 //---------------- integral -----------------------------------------
-struct integral
+class integral
 {
-
+public:
     double dt = 0.0;
     double y0 = 0.0;
 
@@ -44,13 +46,13 @@ struct integral
         this->y0 = y0;
 
     }
+
+    void integral_solver(double u)
+    {
+        y0 = y0 + dt * u;
+
+    }
 };
-
-void integral_solver(integral *W, double u)
-{
-    W->y0 = W->y0 + W->dt * u;
-
-}
 //-------------------------------------------------------------------
 
 //randomizer
@@ -58,11 +60,11 @@ double rand_noize(double u)
 {
     if (u == 0)
     {
-        return (double)(rand() - RAND_MAX / 2) / (RAND_MAX / 2);
+        return (double)(rand() - RAND_MAX * 0.5) / (RAND_MAX * 0.5);
     }
     else
     {
-        double v = (double)(rand() - RAND_MAX / 2) / (RAND_MAX / 2);
+        double v = (double)(rand() - RAND_MAX * 0.5) / (RAND_MAX * 0.5);
 
         return v * 0.05 * u;
     }  
@@ -97,7 +99,7 @@ double primary_filter(std::array<double, 8> &f, double new_val)
         sum += f2[i];
     }
 
-    return sum / f2.size();
+    return sum / (f2.size() - 4);
 }
 //-------------------------------------------------------------------
 

@@ -89,22 +89,22 @@ int main(int argc, char const *argv[]) {
   for (int i = 0; i < int(SIM_TIME/dt); i++)
   {
       
-      u = std::sin(1.2 * i * dt);
+      u = std::sin(1.05 * i * dt);
       
       // feedback
       error = u - W3.y0;
       
-      aperiodic_solver(&W1, K * error);
+      W1.aperiodic_solver(K * error);
       
       noize = W1.y0 - centering + rand_noize(W1.y0);
 
       W2.y0 = primary_filter(F1, noize);
 
-      aperiodic_solver(&W2, W2.y0);
+      W2.aperiodic_solver(W2.y0);
 
       deadzone(&W2.y0, 0.01);
 
-      integral_solver(&W3, W2.y0);
+      W3.integral_solver(W2.y0);
       
      
       y_values.push_back(W1.y0);
